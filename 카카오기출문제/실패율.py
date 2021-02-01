@@ -1,24 +1,21 @@
 def solution(N, stages):
-    # 아직 클리어하지 못한 플레이어의 수 / 스테이지에 도달한 플레이어 수
-    fail = []
-    count_value = [0] * (N + 2)
-    for i in range(1, N + 2):
-        count_value[i] = stages.count(i)
+    # 스테이지 도달했으나, 아직 클리어하지 못한 플레이어의 수 / 스테이지에 도달한 플레이어의 수
 
-        # print(count_value)
-    answer = []
+    stages.sort()
+    players = len(stages)
+    answer = {}
+
     for i in range(1, N + 1):
-        if count_value[i] == 0:
-            fail.append((i, 0))
-            continue
+        if players != 0:
+            count = stages.count(i)
+            answer[i] = count / players
+            players -= count
+        else:
+            answer[i] = 0
+    print(answer)
+    return sorted(answer, key=lambda x: answer[x], reverse=True)
 
-        p = count_value[i]
-        all_p = sum([count_value[j] for j in range(i, N + 2)])
-        # print(i, p ,all_p)
-        fail.append((i, p / all_p))
-    # print(fail)
-    fail = sorted(fail, key=lambda x: x[1], reverse=True)
+print(solution(5,[2, 1, 2,1, 2, 4, 1, 3]))
 
-    for i, _ in fail:
-        answer.append(i)
-    return answer
+
+

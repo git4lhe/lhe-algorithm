@@ -2,7 +2,7 @@
 알고리즘 문제풀이 정리
 
 #### Programmers
-- Level 1 : Done
+- Level 1 : All Done
 - Level 2 : WIP
 
 #### BAEKJOON

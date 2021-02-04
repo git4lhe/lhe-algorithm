@@ -6,6 +6,7 @@ def solution(prices):
         for j in range(i+1, leng):
             if prices[i] > prices[j]:
                 break
+        print(i,j)
         answer[i] = j-i
 
     return answer

@@ -8,12 +8,19 @@ def quick_sort(arr, start, end):
     right = end
 
     while (left <= right):
+
+        # 피봇보다 더 큰값들을 찾아냄
+        # 피봇 작으면 pass
         while (left <= right and arr[left] <= arr[pivot]):
             left += 1
 
+        # 피봇보다 더 작은값들을 찾아냄
+        # 피봇보다 크면 pass
         while (left <= right and arr[right] >= arr[pivot]):
             right -= 1
 
+        # left가 right보다 인덱스가 더 크다는것은
+        # 피봇보다 더 큰 값들이 많았다는 거임
         if left > right:  # 엇갈렸다면
             arr[right], arr[pivot] = arr[pivot], arr[right]
 
@@ -24,6 +31,6 @@ def quick_sort(arr, start, end):
     quick_sort(arr, right + 1, end)
 
 
-arr = [5, 6, 7, 8, 1, 2, 9]
+arr = [5, 6, 15, 8, 9, 12, 9]
 quick_sort(arr, 0, len(arr) - 1)
 print(arr)

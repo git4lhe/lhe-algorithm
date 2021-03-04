@@ -28,5 +28,4 @@ def solution(begin, target, words):
                     visited[i]=True
                     stacks.append((words[i],dis+1))
     return 0
-
 print(solution("hit", "hhh", ["hhh","hht"]))

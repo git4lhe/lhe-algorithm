@@ -1,41 +1,36 @@
-
-
 import copy
-def dfs(arr,n):
+def dfs(arr,n,operation):
     if len(arr) == n:
-        opers.append(copy.deepcopy(arr))
-        return
+        return None
 
-    arr.append(" ")
-    dfs(arr,n)
-    arr.pop()
+    opers = sorted([" ","-","+"], key=lambda x: ord(x))
 
-    arr.append("+")
-    dfs(arr,n)
-    arr.pop()
-
-    arr.append("-")
-    dfs(arr,n)
-    arr.pop()
-
-
-
-
-test_case = int(input())
-for _ in range(test_case):
-    n = int(input())
-
-
-    opers = []
-    dfs([],n-1) # operater는 n-1(숫자 사이 간 개수)
-
-    eq = ""
-    # print(opers)
     for oper in opers:
-        eq = ""
-        for i in range(1,n):
-            eq += str(i) + oper[i-1]
-        eq += str(n)
-        if eval(eq.replace(" ","")) == 0:
-            print(eq)
+        operation.append(str(oper))
+        operation.append(str(arr[n]))
+
+        if int(operation[-1]) == len(arr) and eval("".join(operation).replace(" ", "")) == 0:
+            # print("".join(operation))
+            answer.append(copy.deepcopy(operation))
+
+        dfs(arr,n+1,operation)
+        operation.pop()
+        operation.pop()
+
+answer = []
+def solution(N):
+    arr = [i for i in range(1,N+1)]
+    operation = [str(arr[0])]
+
+    dfs(arr,1,operation)
+    return answer
+
+M = int(input())
+for i in range(M):
+    n = int(input())
+    answer = solution(n)
+
     print()
+    answer = []
+
+

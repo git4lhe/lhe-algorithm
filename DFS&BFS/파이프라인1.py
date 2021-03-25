@@ -8,7 +8,7 @@ def bfs(x,y,pipe):
     if (x == N-1 and y == N-1):
         result += 1
         return
-g
+
     for i in range(3):
         # 0: 가로, 1:세로, 2:대각선
         if (i == 0 and pipe == 1) or (i == 1 and pipe == 0):

@@ -29,9 +29,7 @@ result = 0
 def solution():
 
     bfs(1,0,0)
-
     return result
-
 
 N = int(input())
 maps = [[0] * N for i in range(N)]

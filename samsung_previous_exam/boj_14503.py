@@ -1,59 +1,36 @@
-def check_xy(x,y):
-    if 0<=x <N and 0<=y<M:
-        return True
+def solve(x,y,dir,answer):
 
-    return False
+     dx = [-1,0,1,0]
+     dy = [0,1,0,-1]
 
-def redirect(x,y,dir,new_dir):
-    ndir = (dir + new_dir) % 4
-    nx = x + dx[ndir]
-    ny = y + dy[ndir]
-    return nx,ny,ndir
+     while(1):
+        move = False
+        # 0: 빈공간 1:벽 2:청소
+        for i in range(4):
+            dir = (dir + 3) % 4 # 반시계 방향 회전 후
+            nx = x + dx[dir] # 좌표 움직임임
+            ny = y + dy[dir]
+            # dir = ndir # 계속 방향을 바꿔주어야함
+            if room[nx][ny] == 0:
+                answer += 1
+                room[nx][ny] = 2
+                x, y= nx,ny
+                move = True
+                break
 
-def dfs(x,y,dir):
-    global answer
-    visited[x][y] = True
-    answer +=1
-
-    # 왼쪽 방향
-    # 1오,2뒤,3왼쪽
-    nx,ny,ndir = redirect(x,y,dir,3) #
-    if check_xy(nx,ny):
-        if not visited[nx][ny] and not room[nx][ny]:
-            visited[nx][ny] = True
-            dfs(nx,ny,dir)
-        elif visited[nx][ny] or room[nx][ny]:
-                _, _, ndir = redirect(x,y,dir,2)
-                dfs(x,y,ndir)
-
-        else:
-            cnt = 0
-            for i in range(4):
-                nx,ny,ndir = redirect(x,y,dir,i)
-                if room[nx][ny] == 1 or visited[nx][ny]:
-                    cnt += 1
-
-            if cnt == 4:
-                nx,ny,_ = redirect(x,y,dir,2)
-                if room[nx][ny] == 1:
-                    return answer
-                dfs(nx,ny,dir)
-
-    return answer
+        if not move:
+            x = x - dx[dir] # ndir = dir 랑 똑같음 (4번회전)
+            y = y - dy[dir]
+            # move back
+            if room[x][y] == 1: # 벽인 경우에만!!
+                return answer
 
 
+n, m = map(int, input().split())
+x, y, d = map(int, input().split())
+room = [list(map(int, input().split())) for _ in range(n)]
+# 처음 그 칸을 청소하여 1부터 시작
+room[x][y] = 2
+print(solve(x,y,d,1))
 
-N, M = list(map(int,input().split()))
-sx, sy, sdir = list(map(int,input().split()))
-room = []
-for i in range(N):
-    row = list(map(int,input().split()))
-    room.append(row)
 
-visited = [[0] * M for _ in range(N)]
-answer = 0
-# 북동남서
-dx =[-1,0,1,0]
-dy = [0,1,0,-1]
-dfs(sx,sy,sdir)
-print(answer)
